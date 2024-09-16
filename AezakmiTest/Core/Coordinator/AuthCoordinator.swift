@@ -11,7 +11,7 @@ enum AuthRoute: Hashable {
     case registration
 }
 
-class AuthCoordinator: ObservableObject {
+final class AuthCoordinator: ObservableObject {
     @Published var path = NavigationPath()
     @Published var isShowingResetPassword = false
     

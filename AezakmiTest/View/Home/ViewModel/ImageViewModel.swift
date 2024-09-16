@@ -19,7 +19,7 @@ enum FilterType: String, CaseIterable {
     case blur = "Размытие"
 }
 
-class ImageViewModel: ObservableObject {
+final class ImageViewModel: ObservableObject {
     @Published var imageModel = ImageModel()
     @Published var isImagePickerPresented = false
     @Published var imageSource: ImageSource = .library

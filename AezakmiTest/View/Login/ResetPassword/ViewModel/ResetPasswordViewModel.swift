@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 
-class ForgotPasswordViewModel: ObservableObject {
+final class ForgotPasswordViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var alertMessage: String = ""
     @Published var showAlert: Bool = false

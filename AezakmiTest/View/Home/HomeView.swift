@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @ObservedObject var authViewModel: AuthenticationViewModel
     @StateObject private var viewModel = ImageViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
@@ -33,7 +34,19 @@ struct HomeView: View {
                     }
                 }
                 .navigationTitle("Image Editor")
+                .toolbar(content: {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            authViewModel.signOut()
+                            dismiss()
+                        }) {
+                            Text("Выйти")
+                        }
+                    }
+                })
             }
+            
+            
             
             if viewModel.addNewText {
                 
@@ -97,6 +110,7 @@ struct HomeView: View {
                 .frame(maxHeight: .infinity, alignment: .top)
             }
         }
+       
         .sheet(isPresented: $viewModel.isImagePickerPresented) {
             ImagePicker(sourceType: viewModel.imageSource == .camera ? .camera : .photoLibrary, selectedImage: { image in
                 viewModel.handleImageSelection(image: image)

@@ -38,6 +38,7 @@ struct SignInEmailView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                         .onChange(of: emailAddress) { newValue in
+                            authViewModel.isEmailFieldActive = true 
                             authViewModel.validateEmail(newValue)
                         }
                     
@@ -47,23 +48,24 @@ struct SignInEmailView: View {
                         .cornerRadius(10)
                         .padding(.horizontal)
                         .onChange(of: password) { newValue in
+                            authViewModel.isPasswordFieldActive = true
                             authViewModel.validatePassword(newValue)
                         }
-                    if !authViewModel.isEmailValid {
+                    if authViewModel.isEmailFieldActive && !authViewModel.isEmailValid {
                         Text("Неверный формат email")
                             .foregroundColor(.red)
                             .padding(.top, 5)
                     }
                     
-                    if !authViewModel.isPasswordValid {
+                    if authViewModel.isPasswordFieldActive && !authViewModel.isPasswordValid {
                         Text("Пароль должен содержать минимум 6 символов")
                             .foregroundColor(.red)
-                            .padding(.top, 5)
+                            .padding(5)
                     }
                     
                     
                     LoginButton(emailAddress: $emailAddress, password: $password, showInvalidPWAlert: $showInvalidPWAlert, isAuthenticated: $isAuthenticated, authViewModel: authViewModel)
-                        .disabled(!authViewModel.isEmailValid && !authViewModel.isPasswordValid)
+                        .padding()
                     
                     
                     Button(action: {

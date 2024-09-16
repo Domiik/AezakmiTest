@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-class RegistrationViewModel: ObservableObject {
+final class RegistrationViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var errorMessage = ""

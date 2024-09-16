@@ -18,7 +18,7 @@ protocol AuthenticationServiceProtocol {
 }
 
 
-class AuthenticationService: AuthenticationServiceProtocol {
+final class AuthenticationService: AuthenticationServiceProtocol {
     func login(with loginOption: LoginOption, completion: @escaping (Result<Void, Error>) -> Void) {
         switch loginOption {
         case let .emailAndPassword(email, password):

@@ -13,7 +13,7 @@ enum LoginOption: Equatable {
     case emailAndPassword(email: String, password: String)
 }
 
-class AuthenticationViewModel: NSObject, ObservableObject {
+final class AuthenticationViewModel: NSObject, ObservableObject {
     
     enum State {
         case idle
@@ -27,8 +27,10 @@ class AuthenticationViewModel: NSObject, ObservableObject {
     @Published var restoreGoogleSignIn: Bool = false
     @Published var isAuthenticated: Bool = false
     @Published var showInvalidPWAlert: Bool = false
-    @Published var isEmailValid: Bool = true
-    @Published var isPasswordValid: Bool = true
+    @Published var isEmailValid: Bool = false
+    @Published var isPasswordValid: Bool = false
+    @Published var isEmailFieldActive: Bool = false
+    @Published var isPasswordFieldActive: Bool = false
     private let authService: AuthenticationServiceProtocol
     
     init(authService: AuthenticationServiceProtocol) {
@@ -58,7 +60,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     self?.isAuthenticated = true
                     self?.stateView = .end
                 case .failure(let error):
@@ -76,7 +77,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             switch result {
             case .success:
                 DispatchQueue.main.async {
-                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     self?.stateView = .end
                 }
             case .failure(let error):
@@ -93,7 +93,6 @@ class AuthenticationViewModel: NSObject, ObservableObject {
             switch result {
             case .success:
                 DispatchQueue.main.async {
-                    UserDefaults.standard.set(false, forKey: "isLoggedIn")
                     self?.restoreGoogleSignIn = false
                 }
             case .failure(let error):
@@ -104,5 +103,3 @@ class AuthenticationViewModel: NSObject, ObservableObject {
         }
     }
 }
-
-
